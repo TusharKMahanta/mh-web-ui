@@ -1,0 +1,17 @@
+.item-bottom-panel {
+    height: 100px;
+
+    .left-panel {
+        float: left;
+        margin-right: 5px;
+    }
+
+    .right-panel {
+        float: right;
+        margin-right: 5px;
+    }
+
+}
+#search-sec-id {
+    margin: 5px 0 15px 0;
+}

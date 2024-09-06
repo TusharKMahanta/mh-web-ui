@@ -1,0 +1,6 @@
+Global:
+  Name: mhwebui
+
+Deployment:
+  replicas: 2
+  ImageName: image-1
