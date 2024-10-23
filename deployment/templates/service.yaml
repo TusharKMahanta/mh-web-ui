@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mhwebui-service
+  namespace: {{ .Values.Global.Namespace }}
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: mhwebui-label
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 3000
+      nodePort: 32000

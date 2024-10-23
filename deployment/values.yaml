@@ -1,6 +1,12 @@
 Global:
   Name: mhwebui
+  Namespace: morhaat
+
 
 Deployment:
-  replicas: 2
+  Replicas: 2
   ImageName: image-1
+
+service:
+  type: NodePort
+  port: 80
