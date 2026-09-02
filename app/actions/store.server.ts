@@ -85,7 +85,7 @@ const products = [
     price: '$210',
   },
   {
-    id: 1,
+    id: 5,
     name: 'Zip Tote Basket',
     color: 'White and black',
     href: '#',
@@ -94,7 +94,7 @@ const products = [
     price: '$140',
   },
   {
-    id: 2,
+    id: 6,
     name: 'Zip High Wall Tote',
     color: 'White and blue',
     href: '#',
@@ -103,7 +103,7 @@ const products = [
     price: '$150',
   },
   {
-    id: 3,
+    id: 7,
     name: 'Halfsize Tote',
     color: 'Clay',
     href: '#',
@@ -112,7 +112,7 @@ const products = [
     price: '$210',
   },
   {
-    id: 4,
+    id: 8,
     name: 'High Wall Tote',
     color: 'Black and orange',
     href: '#',
@@ -121,7 +121,7 @@ const products = [
     price: '$210',
   },
   {
-    id: 1,
+    id: 9,
     name: 'Zip Tote Basket',
     color: 'White and black',
     href: '#',
@@ -130,7 +130,7 @@ const products = [
     price: '$140',
   },
   {
-    id: 2,
+    id: 10,
     name: 'Zip High Wall Tote',
     color: 'White and blue',
     href: '#',
@@ -139,7 +139,7 @@ const products = [
     price: '$150',
   },
   {
-    id: 3,
+    id: 11,
     name: 'Halfsize Tote',
     color: 'Clay',
     href: '#',
@@ -148,7 +148,7 @@ const products = [
     price: '$210',
   },
   {
-    id: 4,
+    id: 12,
     name: 'High Wall Tote',
     color: 'Black and orange',
     href: '#',

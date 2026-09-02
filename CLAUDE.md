@@ -44,6 +44,14 @@ All data MUST flow through **service modules in `app/actions/*.server.ts`** (e.g
 - **Do not put mock data arrays inline in route or component files.** `app/routes/cart.tsx` currently violates this (`INITIAL_CART_ITEMS` inline, totals hardcoded) — migrate cart data/logic into a `cart.server.ts` service + typed model when touching it.
 - Keep the mock/real switch at the module boundary: a real backend later means rewriting the body of these functions only.
 
+### Environment configuration (the deploy seam — read before reading `process.env`)
+
+Per-environment settings are **runtime env vars**, resolved once at server boot. Never use `import.meta.env` / `VITE_*` for deploy config — the app is built once and deployed to many environments. Full guide: `docs/CONFIGURATION.md`.
+
+- **`app/config/env.server.ts`** is the only module that reads `process.env`. It validates/coerces and exports a typed `serverEnv`. In `staging`/`production` a missing or malformed required var (`SESSION_SECRET`, and `API_BASE_URL` when `USE_MOCK_DATA=false`) throws at boot; in `development` it warns and uses a default. Route loaders/actions and `app/actions/*.server.ts` import `serverEnv` — they must not touch `process.env` directly.
+- **`app/config/public-env.ts`** defines `PublicEnv`, the browser-safe subset. `app/root.tsx`'s loader ships it and serializes it to `window.ENV`. Anything named `PUBLIC_*` ends up in page HTML — never a secret.
+- Dev vars load automatically from `.env.development` (committed, no secrets) / `.env.local` (git-ignored) via the Remix Vite plugin. Production/Docker: real env vars only (`.env` files are not read by `remix-serve`). `.env.example` documents every var.
+
 ## Conventions & gotchas
 
 - The domain term for product groupings is misspelled **`catagories`/`catagory`** throughout `home.server.ts` and `_index.tsx`. Prefer fixing it to `categories` as part of formalizing the data layer; if you leave it, be consistent.
