@@ -1,0 +1,50 @@
+{
+  "data": [
+    {
+      "id": "cat_apparel",
+      "slug": "apparel",
+      "name": "Apparel",
+      "description": "Clothing for men, women, and kids.",
+      "imageUrl": "https://picsum.photos/seed/apparel/640/480",
+      "productCount": 128,
+      "createdAt": "2026-01-12T09:00:00.000Z",
+      "updatedAt": "2026-08-30T14:22:11.000Z"
+    },
+    {
+      "id": "cat_footwear",
+      "slug": "footwear",
+      "name": "Footwear",
+      "description": "Sneakers, boots, sandals, and more.",
+      "imageUrl": "https://picsum.photos/seed/footwear/640/480",
+      "productCount": 64,
+      "createdAt": "2026-01-12T09:00:00.000Z",
+      "updatedAt": "2026-08-28T10:05:00.000Z"
+    },
+    {
+      "id": "cat_electronics",
+      "slug": "electronics",
+      "name": "Electronics",
+      "description": "Phones, audio, wearables, and accessories.",
+      "imageUrl": "https://picsum.photos/seed/electronics/640/480",
+      "productCount": 210,
+      "createdAt": "2026-01-12T09:00:00.000Z",
+      "updatedAt": "2026-09-01T18:41:37.000Z"
+    },
+    {
+      "id": "cat_home",
+      "slug": "home-living",
+      "name": "Home & Living",
+      "description": "Furniture, decor, kitchen, and bath.",
+      "imageUrl": "https://picsum.photos/seed/home/640/480",
+      "productCount": 175,
+      "createdAt": "2026-01-12T09:00:00.000Z",
+      "updatedAt": "2026-08-25T07:12:44.000Z"
+    }
+  ],
+  "meta": {
+    "page": 1,
+    "pageSize": 20,
+    "total": 4,
+    "totalPages": 1
+  }
+}

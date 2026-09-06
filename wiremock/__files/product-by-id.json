@@ -1,0 +1,26 @@
+{
+  "id": "{{request.pathSegments.[2]}}",
+  "slug": "classic-crew-tee",
+  "name": "Classic Crew Tee",
+  "description": "100% combed cotton crew-neck t-shirt with a relaxed fit.",
+  "categoryId": "cat_apparel",
+  "price": {
+    "amount": 1999,
+    "currency": "USD"
+  },
+  "images": [
+    "https://picsum.photos/seed/{{request.pathSegments.[2]}}-1/800/800",
+    "https://picsum.photos/seed/{{request.pathSegments.[2]}}-2/800/800"
+  ],
+  "variants": [
+    { "id": "var_s_black", "size": "S", "color": "Black", "sku": "CCT-S-BLK", "inStock": true },
+    { "id": "var_m_black", "size": "M", "color": "Black", "sku": "CCT-M-BLK", "inStock": true },
+    { "id": "var_l_black", "size": "L", "color": "Black", "sku": "CCT-L-BLK", "inStock": false }
+  ],
+  "rating": {
+    "average": 4.4,
+    "count": 87
+  },
+  "createdAt": "2026-02-03T11:30:00.000Z",
+  "updatedAt": "2026-09-02T16:00:00.000Z"
+}
