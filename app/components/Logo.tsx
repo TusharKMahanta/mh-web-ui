@@ -5,8 +5,8 @@ export default function Logo({ className }: { className?: string }) {
         <span className="sr-only">Your Company</span>
         <img
           alt=""
-          src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-          className="h-8 w-auto"
+          src="morhaat.png?color=indigo&shade=600"
+          className="h-12 w-auto"
         />
       </a>
     </div>

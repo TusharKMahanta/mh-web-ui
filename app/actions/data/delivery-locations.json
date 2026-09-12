@@ -1,0 +1,35 @@
+[
+  {
+    "id": "loc_seed_1",
+    "recipientName": "Tushar Kanti Mahanta",
+    "line1": "42048, Wing-42",
+    "line2": "SOBHA dream acres, Balagere Panathur Road",
+    "city": "Bengaluru",
+    "state": "Karnataka",
+    "postalCode": "560087",
+    "country": "India",
+    "isDefault": true
+  },
+  {
+    "id": "loc_seed_2",
+    "recipientName": "Bandana Mahanta",
+    "line1": "Oxygen Building",
+    "line2": "Dhobadia Keonjhar",
+    "city": "Kendujhar",
+    "state": "Odisha",
+    "postalCode": "758001",
+    "country": "India",
+    "isDefault": false
+  },
+  {
+    "id": "loc_seed_3",
+    "recipientName": "Rajendra Mahanta",
+    "line1": "At/Po- Bhanda",
+    "line2": "Dist- Keonjhar",
+    "city": "Keonjhar",
+    "state": "Odisha",
+    "postalCode": "758044",
+    "country": "India",
+    "isDefault": false
+  }
+]

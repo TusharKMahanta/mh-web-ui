@@ -27,7 +27,7 @@ export interface NavigationResponse {
 
 const categories: NavigationCategory[] = [
   {
-    name: "Catagory 1",
+    name: "Groceries & Essentials",
     featured: [
       { name: "Sleep", href: "#" },
       { name: "Swimwear", href: "#" },
@@ -55,7 +55,7 @@ const categories: NavigationCategory[] = [
     ],
   },
   {
-    name: "Catagory 2",
+    name: "Beauties & Personal Care",
     featured: [
       { name: "Casual", href: "#" },
       { name: "Boxers", href: "#" },
@@ -85,10 +85,9 @@ const categories: NavigationCategory[] = [
 ];
 
 const pages: NavLink[] = [
-  { name: "Company", href: "#" },
-  { name: "Stores", href: "/" },
-  { name: "Addresses", href: "/address" },
-  { name: "History", href: "/history" },
+  { name: "Fresh Vegetables", href: "/fresh-vegetables" },
+  { name: "Exotic Fruits/Vegetables", href: "/exotic-fruits-vegetables" },
+  { name: "Food & Health", href: "/food" },
 ];
 
 async function getNavigation(): Promise<NavigationResponse> {

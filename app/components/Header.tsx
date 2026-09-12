@@ -2,15 +2,21 @@ import { useState } from 'react'
 import { PopoverGroup } from '@headlessui/react'
 import { Bars3Icon, ShoppingCartIcon } from '@heroicons/react/24/outline'
 
+import type { DeliveryLocation } from '~/actions/delivery.server'
 import type { NavigationResponse } from '~/actions/navigation.server'
 import AccountPopover from '~/components/AccountPopover'
-import Logo from '~/components/Logo'
 import MegaMenu from '~/components/MegaMenu'
 import MobileMenu from '~/components/MobileMenu'
 import SearchLink from '~/components/SearchLink'
 import TopBar from '~/components/TopBar'
 
-export default function Header({ navigation }: { navigation: NavigationResponse }) {
+export default function Header({
+  navigation,
+  deliveryLocations,
+}: {
+  navigation: NavigationResponse
+  deliveryLocations: DeliveryLocation[]
+}) {
   const [open, setOpen] = useState(false)
 
   return (
@@ -19,14 +25,14 @@ export default function Header({ navigation }: { navigation: NavigationResponse 
 
       <header className="relative">
         <nav aria-label="Top">
-          <TopBar />
+          <TopBar deliveryLocations={deliveryLocations} />
 
           {/* Secondary navigation */}
           <div className="bg-white">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <div className="border-b border-gray-200">
                 <div className="flex h-16 items-center justify-between">
-                  <Logo className="hidden lg:flex lg:items-center" />
+                  
 
                   <div className="hidden h-full lg:flex">
                     {/* Mega menus */}
@@ -62,15 +68,9 @@ export default function Header({ navigation }: { navigation: NavigationResponse 
                     <SearchLink className="ml-2 p-2 text-gray-400 hover:text-gray-500" />
                   </div>
 
-                  <Logo className="lg:hidden" />
-
                   <div className="flex flex-1 items-center justify-end">
                     <div className="flex items-center lg:ml-8">
                       <div className="flex space-x-8">
-                        <div className="hidden lg:flex">
-                          <SearchLink className="-m-2 p-2 text-gray-400 hover:text-gray-500" />
-                        </div>
-
                         <AccountPopover />
                       </div>
 

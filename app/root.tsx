@@ -8,6 +8,7 @@ import {
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
 
+import DeliveryServer from "~/actions/delivery.server";
 import NavigationServer from "~/actions/navigation.server";
 import Footer from "~/components/Footer";
 import Header from "~/components/Header";
@@ -18,8 +19,15 @@ import "./tailwind.css";
 
 export async function loader() {
   // Ships only the browser-safe subset of config to the client.
-  const navigation = await NavigationServer.getNavigation();
-  return Response.json({ ENV: getPublicEnv(serverEnv), navigation });
+  const [navigation, deliveryLocations] = await Promise.all([
+    NavigationServer.getNavigation(),
+    DeliveryServer.listLocations(),
+  ]);
+  return Response.json({
+    ENV: getPublicEnv(serverEnv),
+    navigation,
+    deliveryLocations,
+  });
 }
 
 export const links: LinksFunction = () => [
@@ -69,7 +77,10 @@ export default function App() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header navigation={data?.navigation ?? { categories: [], pages: [] }} />
+      <Header
+        navigation={data?.navigation ?? { categories: [], pages: [] }}
+        deliveryLocations={data?.deliveryLocations?.locations ?? []}
+      />
       <main className="flex-1">
         <Outlet />
       </main>
