@@ -2,7 +2,6 @@ import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
 import { useFetcher } from '@remix-run/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
-//import type { DeliveryLocation } from '~/actions/delivery.server'
 import type { Address } from '~/actions/address.server'
 
 interface DeliveryModalProps {
