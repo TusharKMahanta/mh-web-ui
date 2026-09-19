@@ -1,0 +1,12 @@
+{
+    "data": {
+    "id": "str_2",
+    "slug": "morhaat-guwahati",
+    "name": "Morhaat Guwahati",
+    "description": "Concept store on GS Road.",
+    "city": "Guwahati",
+    "country": "India",
+    "isOpen": false,
+    "createdAt": "2026-02-05T08:00:00.000Z"
+  }
+}

@@ -1,0 +1,43 @@
+{
+    "mappings": [
+        {
+            "request": {
+                "method": "GET",
+                "urlPathPattern": "/mh-store-app/stores/str_1"
+            },
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "bodyFileName": "store/store-by-id-str_1.json"
+            }
+        },
+        {
+            "request": {
+                "method": "GET",
+                "urlPathPattern": "/mh-store-app/stores/str_2"
+            },
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "bodyFileName": "store/store-by-id-str_2.json"
+            }
+        },
+        {
+            "request": {
+                "method": "GET",
+                "urlPathPattern": "/mh-store-app/stores/str_3"
+            },
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "bodyFileName": "store/store-by-id-str_3.json"
+            }
+        }
+    ]
+}

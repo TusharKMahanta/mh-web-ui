@@ -10,7 +10,7 @@ export const meta: MetaFunction = () => {
 };
 
 export async function loader() {
-    const catagories = await HomeServer.getCatagories();
+    const catagories = await HomeServer.getStoresNearYou(37.7749, -122.4194, 1000);
     return Response.json({ catagories });
   }
 

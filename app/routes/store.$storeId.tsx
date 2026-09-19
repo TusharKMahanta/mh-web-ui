@@ -2,30 +2,40 @@ import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
 import StoreServer from "~/actions/store.server";
+import { getSelectedDeliveryLocationId } from "~/utils/delivery-location.server";
 
 export const meta: MetaFunction = () => [
   { title: "Store · Morhaat" },
   { name: "description", content: "Morhaat store." },
 ];
 
-export async function loader({ params }: LoaderFunctionArgs) {
+export async function loader({ params, request }: LoaderFunctionArgs) {
   const { storeId } = params;
+  console.log("storeId::", storeId);
   if (!storeId) {
     throw new Response("Store not found", { status: 404 });
   }
 
-  const storeDetails = await StoreServer.getStore(storeId);
-  if (!storeDetails) {
+  const store = await StoreServer.getStore(storeId);
+  console.log("store::", store);
+  if (!store) {
     throw new Response("Store not found", { status: 404 });
   }
-  const skus = await StoreServer.getProducts(storeId);
-  return Response.json({ store: storeDetails, skus });
+
+  // The shopper's selected delivery location (set via the "Deliver to…" modal)
+  // is read here and passed into the service call, the same way any other
+  // route's loader can — see `~/utils/delivery-location.server` for why this
+  // travels as a cookie rather than component props.
+  //const addressId = await getSelectedDeliveryLocationId(request);
+  //console.log("addressId", addressId);
+  const skus = await StoreServer.getProductsByStoreId(storeId);
+
+  return Response.json({ store, skus });
 }
 
 export default function StorePage() {
-  // Store data is loaded in the `loader` above and available via
-  // `useLoaderData<typeof loader>()`. Page content to be added later.
-  const { storeDetails, skus } = useLoaderData<typeof loader>() ;
+  const { skus } = useLoaderData<typeof loader>();
+
   return (
     <div className="bg-gray-100">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8" >

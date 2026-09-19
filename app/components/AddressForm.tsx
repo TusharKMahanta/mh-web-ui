@@ -21,7 +21,7 @@ const FIELDS: ReadonlyArray<{
   optional?: boolean;
   half?: boolean;
 }> = [
-  { name: "fullName", label: "Full name", autoComplete: "name" },
+  { name: "recipientName", label: "Full name", autoComplete: "name" },
   { name: "phone", label: "Phone", type: "tel", autoComplete: "tel" },
   { name: "line1", label: "Address line 1", autoComplete: "address-line1" },
   {

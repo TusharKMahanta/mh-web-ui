@@ -10,7 +10,7 @@ export default function AddressCard({ address }: { address: Address }) {
       ) : null}
 
       <p className="pr-16 text-sm font-semibold text-gray-900">
-        {address.fullName}
+        {address.recipientName}
       </p>
 
       <address className="mt-2 space-y-0.5 text-sm not-italic text-gray-600">

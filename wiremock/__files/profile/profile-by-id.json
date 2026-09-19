@@ -1,0 +1,9 @@
+{
+  "data": {
+    "id": "profile_seed_1",
+    "fullName": "Tushar Mahanta",
+    "phone": "+91 98765 43210",
+    "email": "tushar.mahanta@example.com",
+    "favouriteStores": ["store_seed_1", "store_seed_2", "store_seed_3"]
+  }
+}

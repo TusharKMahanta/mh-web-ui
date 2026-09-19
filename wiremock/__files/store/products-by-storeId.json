@@ -1,0 +1,112 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "Zip Tote Basket",
+            "color": "White and black",
+            "href": "#",
+            "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-01.jpg",
+            "imageAlt": "Front of zip tote bag with white canvas, black canvas straps and handle, and black zipper pulls.",
+            "price": "$140"
+        },
+        {
+            "id": 2,
+            "name": "Zip High Wall Tote",
+            "color": "White and blue",
+            "href": "#",
+            "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-02.jpg",
+            "imageAlt": "Front of zip tote bag with white canvas, blue canvas straps and handle, and front zipper pocket.",
+            "price": "$150"
+        },
+        {
+            "id": 3,
+            "name": "Halfsize Tote",
+            "color": "Clay",
+            "href": "#",
+            "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-03.jpg",
+            "imageAlt": "Front of tote with monochrome natural canvas body, straps, roll top, and handles.",
+            "price": "$210"
+        },
+        {
+            "id": 4,
+            "name": "High Wall Tote",
+            "color": "Black and orange",
+            "href": "#",
+            "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-04.jpg",
+            "imageAlt": "Front of zip tote bag with black canvas, black handles, and orange drawstring top.",
+            "price": "$210"
+        },
+        {
+            "id": 5,
+            "name": "Zip Tote Basket",
+            "color": "White and black",
+            "href": "#",
+            "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-01.jpg",
+            "imageAlt": "Front of zip tote bag with white canvas, black canvas straps and handle, and black zipper pulls.",
+            "price": "$140"
+        },
+        {
+            "id": 6,
+            "name": "Zip High Wall Tote",
+            "color": "White and blue",
+            "href": "#",
+            "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-02.jpg",
+            "imageAlt": "Front of zip tote bag with white canvas, blue canvas straps and handle, and front zipper pocket.",
+            "price": "$150"
+        },
+        {
+            "id": 7,
+            "name": "Halfsize Tote",
+            "color": "Clay",
+            "href": "#",
+            "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-03.jpg",
+            "imageAlt": "Front of tote with monochrome natural canvas body, straps, roll top, and handles.",
+            "price": "$210"
+        },
+        {
+            "id": 8,
+            "name": "High Wall Tote",
+            "color": "Black and orange",
+            "href": "#",
+            "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-04.jpg",
+            "imageAlt": "Front of zip tote bag with black canvas, black handles, and orange drawstring top.",
+            "price": "$210"
+        },
+        {
+            "id": 9,
+            "name": "Zip Tote Basket",
+            "color": "White and black",
+            "href": "#",
+            "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-01.jpg",
+            "imageAlt": "Front of zip tote bag with white canvas, black canvas straps and handle, and black zipper pulls.",
+            "price": "$140"
+        },
+        {
+            "id": 10,
+            "name": "Zip High Wall Tote",
+            "color": "White and blue",
+            "href": "#",
+            "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-02.jpg",
+            "imageAlt": "Front of zip tote bag with white canvas, blue canvas straps and handle, and front zipper pocket.",
+            "price": "$150"
+        },
+        {
+            "id": 11,
+            "name": "Halfsize Tote",
+            "color": "Clay",
+            "href": "#",
+            "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-03.jpg",
+            "imageAlt": "Front of tote with monochrome natural canvas body, straps, roll top, and handles.",
+            "price": "$210"
+        },
+        {
+            "id": 12,
+            "name": "High Wall Tote",
+            "color": "Black and orange",
+            "href": "#",
+            "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-04.jpg",
+            "imageAlt": "Front of zip tote bag with black canvas, black handles, and orange drawstring top.",
+            "price": "$210"
+        }
+    ]
+}

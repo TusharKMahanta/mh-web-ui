@@ -3,21 +3,29 @@ import { Button } from "@headlessui/react";
 import { MagnifyingGlassIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import Logo from '~/components/Logo'
 
-import type { DeliveryLocation } from "~/actions/delivery.server";
+import type { Address} from '~/actions/address.server'
 import DeliveryModal from "~/components/DeliveryModal";
 import LoginModal from "~/components/LoginModal";
 
 interface TopBarProps {
-  deliveryLocations?: DeliveryLocation[];
+  deliveryLocations?: Address[];
+  /** Id persisted in the `delivery_location_id` cookie, if the shopper has picked one. */
+  selectedDeliveryLocationId?: string | null;
   onSearch?: (query: string) => void;
 }
 
-export default function TopBar({ deliveryLocations = [], onSearch }: TopBarProps) {
+export default function TopBar({
+  deliveryLocations = [],
+  selectedDeliveryLocationId = null,
+  onSearch,
+}: TopBarProps) {
   const [loginOpen, setLoginOpen] = useState(false);
   const [deliveryOpen, setDeliveryOpen] = useState(false);
 
   const selectedLocation =
-    deliveryLocations.find((location) => location.isDefault) ?? deliveryLocations[0];
+    deliveryLocations.find((location) => location.id === selectedDeliveryLocationId) ??
+    deliveryLocations.find((location) => location.isDefault) ??
+    deliveryLocations[0];
 
   function handleSearchSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();

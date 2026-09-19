@@ -1,0 +1,43 @@
+{
+  "data":[
+    {
+      "id": "loc_seed_1",
+      "recipientName": "Tushar Kanti Mahanta",
+      "phone": "+91 98765 43210",
+      "line1": "42048, Wing-42",
+      "line2": "SOBHA dream acres, Balagere Panathur Road",
+      "city": "Bengaluru",
+      "state": "Karnataka",
+      "postalCode": "560087",
+      "country": "India",
+      "isDefault": true,
+      "createdAt": "2026-01-15T09:30:00.000Z"
+    },
+    {
+      "id": "loc_seed_2",
+      "recipientName": "Bandana Mahanta",
+      "phone": "+91 98765 43210",
+      "line1": "Oxygen Building",
+      "line2": "Dhobadia Keonjhar",
+      "city": "Kendujhar",
+      "state": "Odisha",
+      "postalCode": "758001",
+      "country": "India",
+      "isDefault": false,
+      "createdAt": "2026-01-16T10:15:00.000Z"
+    },
+    {
+      "id": "loc_seed_3",
+      "recipientName": "Rajendra Mahanta",
+      "phone": "+91 98765 43210",
+      "line1": "At/Po- Bhanda",
+      "line2": "Dist- Keonjhar",
+      "city": "Keonjhar",
+      "state": "Odisha",
+      "postalCode": "758044",
+      "country": "India",
+      "isDefault": false,
+      "createdAt": "2026-01-17T11:00:00.000Z"
+    }
+  ]
+}

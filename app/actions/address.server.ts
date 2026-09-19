@@ -6,10 +6,11 @@
  * later. The in-memory `addresses` array stands in for a database table.
  * Swapping in a real API means rewriting only the bodies of the functions below.
  */
+import { serverEnv } from "~/config/env.server";
 
 export interface Address {
   id: string;
-  fullName: string;
+  recipientName: string;
   phone: string;
   line1: string;
   line2: string | null;
@@ -28,7 +29,7 @@ export interface AddressListResponse {
 }
 
 export interface CreateAddressInput {
-  fullName: string;
+  recipientName: string;
   phone: string;
   line1: string;
   line2?: string | null;
@@ -44,7 +45,7 @@ export type AddressFieldErrors = Partial<
 >;
 
 const REQUIRED_FIELDS: ReadonlyArray<keyof CreateAddressInput> = [
-  "fullName",
+  "recipientName",
   "phone",
   "line1",
   "city",
@@ -55,21 +56,7 @@ const REQUIRED_FIELDS: ReadonlyArray<keyof CreateAddressInput> = [
 
 // In-memory store standing in for a `addresses` database table. Seeded with one
 // row so the list has something to render on first load.
-const addresses: Address[] = [
-  {
-    id: "adr_seed_1",
-    fullName: "Tushar Mahanta",
-    phone: "+91 98765 43210",
-    line1: "12 MG Road",
-    line2: "Near City Mall",
-    city: "Bengaluru",
-    state: "Karnataka",
-    postalCode: "560001",
-    country: "India",
-    isDefault: true,
-    createdAt: "2026-01-15T09:30:00.000Z",
-  },
-];
+const addresses: Address[] = [];
 
 /**
  * Server-side validation of a create request. Returns a map of field name to
@@ -106,12 +93,29 @@ export function validateAddressInput(
   return errors;
 }
 
-async function listAddresses(): Promise<AddressListResponse> {
-  const sorted = [...addresses].sort((a, b) => {
-    if (a.isDefault !== b.isDefault) return a.isDefault ? -1 : 1;
-    return b.createdAt.localeCompare(a.createdAt);
-  });
-  return { addresses: sorted, total: sorted.length };
+async function listAddresses(profileId: string): Promise<AddressListResponse> {
+  const url = `${serverEnv.PROFILE_API_BASE_URL}/profiles/${profileId}/delivery-addresses`;
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), serverEnv.API_TIMEOUT_MS);
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    if (!res.ok) {
+      throw new Error(`GET ${url} failed: ${res.status} ${res.statusText}`);
+    }
+    const body = (await res.json()) as { data: Address[] };
+    addresses.length = 0; // clear the in-memory array
+    [...body.data].forEach((address) => {
+      addresses.push(address);
+    });
+    const sorted = [...addresses].sort((a, b) => {
+      if (a.isDefault !== b.isDefault) return a.isDefault ? -1 : 1;
+      return b.createdAt.localeCompare(a.createdAt);
+    });
+    return { addresses: sorted, total: sorted.length };
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 async function createAddress(input: CreateAddressInput): Promise<Address> {
@@ -120,7 +124,7 @@ async function createAddress(input: CreateAddressInput): Promise<Address> {
 
   const address: Address = {
     id: `adr_${crypto.randomUUID()}`,
-    fullName: input.fullName.trim(),
+    recipientName: input.recipientName.trim(),
     phone: input.phone.trim(),
     line1: input.line1.trim(),
     line2: line2 ? line2 : null,

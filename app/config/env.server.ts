@@ -45,6 +45,10 @@ export interface ServerEnv {
    * When the real data layer lands, `app/actions/*.server.ts` fetch against this.
    */
   API_BASE_URL: string;
+  /** Base URL of the store service. Empty while the app runs on mock data. */
+  STORE_API_BASE_URL: string;
+  /** Base URL of the profile service. Empty while the app runs on mock data. */
+  PROFILE_API_BASE_URL: string;
   /** Abort an API request after this many milliseconds. */
   API_TIMEOUT_MS: number;
   /** When true, service modules serve in-memory mock data and ignore API_BASE_URL. */
@@ -162,6 +166,24 @@ function readEnv(source: NodeJS.ProcessEnv): ServerEnv {
     problems.push(`API_BASE_URL must be an absolute http(s) URL (got "${API_BASE_URL}")`);
   }
 
+  const STORE_API_BASE_URL = USE_MOCK_DATA
+    ? optionalStr("STORE_API_BASE_URL", "")
+    : str("STORE_API_BASE_URL", "");
+  if (STORE_API_BASE_URL && !/^https?:\/\//.test(STORE_API_BASE_URL)) {
+    problems.push(
+      `STORE_API_BASE_URL must be an absolute http(s) URL (got "${STORE_API_BASE_URL}")`,
+    );
+  }
+
+  const PROFILE_API_BASE_URL = USE_MOCK_DATA
+    ? optionalStr("PROFILE_API_BASE_URL", "")
+    : str("PROFILE_API_BASE_URL", "");
+  if (PROFILE_API_BASE_URL && !/^https?:\/\//.test(PROFILE_API_BASE_URL)) {
+    problems.push(
+      `PROFILE_API_BASE_URL must be an absolute http(s) URL (got "${PROFILE_API_BASE_URL}")`,
+    );
+  }
+  
   const env: ServerEnv = {
     APP_ENV,
     NODE_ENV,
@@ -170,6 +192,8 @@ function readEnv(source: NodeJS.ProcessEnv): ServerEnv {
     isDevelopment,
     PORT: int("PORT", 3000),
     API_BASE_URL,
+    STORE_API_BASE_URL,
+    PROFILE_API_BASE_URL,
     API_TIMEOUT_MS: int("API_TIMEOUT_MS", 10_000),
     USE_MOCK_DATA,
     LOG_LEVEL: enumStr("LOG_LEVEL", LOG_LEVELS, isDevelopment ? "debug" : "info"),

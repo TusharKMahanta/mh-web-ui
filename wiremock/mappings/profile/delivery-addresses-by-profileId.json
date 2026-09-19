@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/mh-profile-app/profiles/([A-Za-z0-9_-]+)/delivery-addresses"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "bodyFileName": "profile/delivery-addresses-by-profileId.json"
+  }
+}

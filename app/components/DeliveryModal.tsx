@@ -1,19 +1,19 @@
-import { useState } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
+import { useFetcher } from '@remix-run/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
-import type { DeliveryLocation } from '~/actions/delivery.server'
+//import type { DeliveryLocation } from '~/actions/delivery.server'
+import type { Address } from '~/actions/address.server'
 
 interface DeliveryModalProps {
   open: boolean
   onClose: (open: boolean) => void
-  locations: DeliveryLocation[]
+  locations: Address[]
   /** Id of the location currently delivering to, if any. */
   selectedId?: string
-  onSelect?: (id: string) => void
 }
 
-function formatLocation(location: DeliveryLocation): string {
+function formatLocation(location: Address): string {
   const parts = [
     location.line1,
     location.line2,
@@ -27,13 +27,20 @@ export default function DeliveryModal({
   onClose,
   locations,
   selectedId,
-  onSelect,
 }: DeliveryModalProps) {
-  const [activeId, setActiveId] = useState<string | undefined>(selectedId)
+  // Persists the choice as a cookie (via the `api.delivery-location` resource
+  // route) rather than component state, so every loader — this page's and any
+  // page loaded later — can read it and filter by it. See
+  // `~/utils/delivery-location.server` for why. Submitting revalidates every
+  // loader on the currently rendered route tree, so the change also reaches
+  // pages already open.
+  const fetcher = useFetcher()
+
+  const pendingId = fetcher.formData?.get('locationId')
+  const activeId = typeof pendingId === 'string' ? pendingId : selectedId
 
   function handleSelect(id: string) {
-    setActiveId(id)
-    onSelect?.(id)
+    fetcher.submit({ locationId: id }, { method: 'post', action: '/api/delivery-location' })
   }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {

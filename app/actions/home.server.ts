@@ -1,6 +1,6 @@
 "use server";
 
-import Home from "~/routes/_index";
+import StoreServer from "~/actions/store.server";
 
 const catagories = [
   {
@@ -28,7 +28,12 @@ const catagories = [
 async function getCatagories() { 
     return catagories;
 }
+async function getStoresNearYou(lat: number, lng: number, radius: number) {
+    return await StoreServer.getStoresNearYou({ lat, lng, radius });
+  }
 const HomeServer = {
     getCatagories,
+    getStoresNearYou
+
 }
 export default HomeServer

@@ -16,7 +16,7 @@ export const meta: MetaFunction = () => [
 ];
 
 export async function loader() {
-  const { addresses, total } = await AddressServer.listAddresses();
+  const { addresses, total } = await AddressServer.listAddresses("profile_seed_1"); // TODO: use real profileId from session or cookie
   return Response.json({ addresses, total });
 }
 
@@ -24,7 +24,7 @@ export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
 
   const input: Partial<CreateAddressInput> = {
-    fullName: String(formData.get("fullName") ?? ""),
+    recipientName: String(formData.get("recipientName") ?? ""),
     phone: String(formData.get("phone") ?? ""),
     line1: String(formData.get("line1") ?? ""),
     line2: String(formData.get("line2") ?? ""),

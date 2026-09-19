@@ -1,0 +1,12 @@
+{
+    "data": {
+    "id": "str_1",
+    "slug": "morhaat-bengaluru",
+    "name": "Morhaat Bengaluru",
+    "description": "Flagship store on MG Road.",
+    "city": "Bengaluru",
+    "country": "India",
+    "isOpen": true,
+    "createdAt": "2026-01-10T08:00:00.000Z"
+  }
+}

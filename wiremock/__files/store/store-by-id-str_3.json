@@ -1,0 +1,12 @@
+{
+    "data": {
+    "id": "str_3",
+    "slug": "morhaat-bhubaneswar",
+    "name": "Morhaat Bhubaneswar",
+    "description": "Flagship store on MG Road.",
+    "city": "Bhubaneswar",
+    "country": "India",
+    "isOpen": true,
+    "createdAt": "2026-01-10T08:00:00.000Z"
+  }
+}

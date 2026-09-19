@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { PopoverGroup } from '@headlessui/react'
 import { Bars3Icon, ShoppingCartIcon } from '@heroicons/react/24/outline'
 
-import type { DeliveryLocation } from '~/actions/delivery.server'
+import type { Address} from '~/actions/address.server'
 import type { NavigationResponse } from '~/actions/navigation.server'
 import AccountPopover from '~/components/AccountPopover'
 import MegaMenu from '~/components/MegaMenu'
@@ -13,9 +13,11 @@ import TopBar from '~/components/TopBar'
 export default function Header({
   navigation,
   deliveryLocations,
+  selectedDeliveryLocationId,
 }: {
   navigation: NavigationResponse
-  deliveryLocations: DeliveryLocation[]
+  deliveryLocations: Address[]
+  selectedDeliveryLocationId: string | null
 }) {
   const [open, setOpen] = useState(false)
 
@@ -25,7 +27,10 @@ export default function Header({
 
       <header className="relative">
         <nav aria-label="Top">
-          <TopBar deliveryLocations={deliveryLocations} />
+          <TopBar
+            deliveryLocations={deliveryLocations}
+            selectedDeliveryLocationId={selectedDeliveryLocationId}
+          />
 
           {/* Secondary navigation */}
           <div className="bg-white">

@@ -7,6 +7,8 @@
  * only the bodies below.
  */
 
+import { serverEnv } from "~/config/env.server";
+
 export interface Store {
   id: string;
   slug: string;
@@ -19,163 +21,115 @@ export interface Store {
   createdAt: string;
 }
 
+export interface Product {
+  id: number;
+  name: string;
+  color: string;
+  href: string;
+  imageSrc: string;
+  imageAlt: string;
+  price: string;
+}
+
 export interface StoreResponse {
   store: Store;
 }
 
-// In-memory store standing in for a `stores` database table.
-const STORES: Store[] = [
-  {
-    id: "str_1",
-    slug: "morhaat-bengaluru",
-    name: "Morhaat Bengaluru",
-    description: "Flagship store on MG Road.",
-    city: "Bengaluru",
-    country: "India",
-    isOpen: true,
-    createdAt: "2026-01-10T08:00:00.000Z",
-  },
-  {
-    id: "str_2",
-    slug: "morhaat-guwahati",
-    name: "Morhaat Guwahati",
-    description: "Concept store on GS Road.",
-    city: "Guwahati",
-    country: "India",
-    isOpen: false,
-    createdAt: "2026-02-05T08:00:00.000Z",
-  },
-];
+export interface NearbyStore {
+  name: string;
+  description: string;
+  imageSrc: string;
+  imageAlt: string;
+  href: string;
+}
 
-const products = [
-  {
-    id: 1,
-    name: 'Zip Tote Basket',
-    color: 'White and black',
-    href: '#',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-01.jpg',
-    imageAlt: 'Front of zip tote bag with white canvas, black canvas straps and handle, and black zipper pulls.',
-    price: '$140',
-  },
-  {
-    id: 2,
-    name: 'Zip High Wall Tote',
-    color: 'White and blue',
-    href: '#',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-02.jpg',
-    imageAlt: 'Front of zip tote bag with white canvas, blue canvas straps and handle, and front zipper pocket.',
-    price: '$150',
-  },
-  {
-    id: 3,
-    name: 'Halfsize Tote',
-    color: 'Clay',
-    href: '#',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-03.jpg',
-    imageAlt: 'Front of tote with monochrome natural canvas body, straps, roll top, and handles.',
-    price: '$210',
-  },
-  {
-    id: 4,
-    name: 'High Wall Tote',
-    color: 'Black and orange',
-    href: '#',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-04.jpg',
-    imageAlt: 'Front of zip tote bag with black canvas, black handles, and orange drawstring top.',
-    price: '$210',
-  },
-  {
-    id: 5,
-    name: 'Zip Tote Basket',
-    color: 'White and black',
-    href: '#',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-01.jpg',
-    imageAlt: 'Front of zip tote bag with white canvas, black canvas straps and handle, and black zipper pulls.',
-    price: '$140',
-  },
-  {
-    id: 6,
-    name: 'Zip High Wall Tote',
-    color: 'White and blue',
-    href: '#',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-02.jpg',
-    imageAlt: 'Front of zip tote bag with white canvas, blue canvas straps and handle, and front zipper pocket.',
-    price: '$150',
-  },
-  {
-    id: 7,
-    name: 'Halfsize Tote',
-    color: 'Clay',
-    href: '#',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-03.jpg',
-    imageAlt: 'Front of tote with monochrome natural canvas body, straps, roll top, and handles.',
-    price: '$210',
-  },
-  {
-    id: 8,
-    name: 'High Wall Tote',
-    color: 'Black and orange',
-    href: '#',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-04.jpg',
-    imageAlt: 'Front of zip tote bag with black canvas, black handles, and orange drawstring top.',
-    price: '$210',
-  },
-  {
-    id: 9,
-    name: 'Zip Tote Basket',
-    color: 'White and black',
-    href: '#',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-01.jpg',
-    imageAlt: 'Front of zip tote bag with white canvas, black canvas straps and handle, and black zipper pulls.',
-    price: '$140',
-  },
-  {
-    id: 10,
-    name: 'Zip High Wall Tote',
-    color: 'White and blue',
-    href: '#',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-02.jpg',
-    imageAlt: 'Front of zip tote bag with white canvas, blue canvas straps and handle, and front zipper pocket.',
-    price: '$150',
-  },
-  {
-    id: 11,
-    name: 'Halfsize Tote',
-    color: 'Clay',
-    href: '#',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-03.jpg',
-    imageAlt: 'Front of tote with monochrome natural canvas body, straps, roll top, and handles.',
-    price: '$210',
-  },
-  {
-    id: 12,
-    name: 'High Wall Tote',
-    color: 'Black and orange',
-    href: '#',
-    imageSrc: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-04.jpg',
-    imageAlt: 'Front of zip tote bag with black canvas, black handles, and orange drawstring top.',
-    price: '$210',
-  },
-]
+export interface NearbyStoresQuery {
+  lat: number;
+  lng: number;
+  radius: number;
+}
+/**
+ * Stores within `radius` (km) of `lat`/`lng`. Fetches
+ * `${STORE_API_BASE_URL}/stores?lat=&lng=&radius=` when USE_MOCK_DATA=false,
+ * otherwise serves the in-memory fixture above.
+ */
+async function getStoresNearYou({
+  lat,
+  lng,
+  radius,
+}: NearbyStoresQuery): Promise<NearbyStore[]> {
+   const query = new URLSearchParams({
+    lat: String(lat),
+    lng: String(lng),
+    radius: String(radius),
+  });
+  const url = `${serverEnv.STORE_API_BASE_URL}/stores?${query}`;
 
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), serverEnv.API_TIMEOUT_MS);
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    if (!res.ok) {
+      throw new Error(`GET ${url} failed: ${res.status} ${res.statusText}`);
+    }
+    const body = (await res.json()) as { data: NearbyStore[] };
+    return body.data;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function getProductsByStoreId(
+  storeId: string
+): Promise<Product[]> {
+  const url = `${serverEnv.STORE_API_BASE_URL}/stores/${storeId}/products`;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), serverEnv.API_TIMEOUT_MS);
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    if (!res.ok) {
+      throw new Error(`GET ${url} failed: ${res.status} ${res.statusText}`);
+    }
+    const body = (await res.json()) as { data: Product[] };
+    return body.data;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
 /**
  * Look up a single store by its id or its URL slug. Returns `null` when no
  * store matches so the route can render a 404.
  */
 async function getStore(idOrSlug: string): Promise<Store | null> {
-  const key = idOrSlug.trim().toLowerCase();
-  const store = STORES.find(
-    (s) => s.id.toLowerCase() === key || s.slug.toLowerCase() === key,
-  );
-  return store ? { ...store } : null;
+  const url = `${serverEnv.STORE_API_BASE_URL}/stores/${idOrSlug}`;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), serverEnv.API_TIMEOUT_MS);
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    if (!res.ok) {
+      throw new Error(`GET ${url} failed: ${res.status} ${res.statusText}`);
+    }
+    const body = (await res.json()) as { data: Store };
+    return body.data;
+  } finally {
+    clearTimeout(timeout);
+  }
 }
-async function getProducts(id: string): Promise<any[]> {
-  return products;
+
+export interface ProductQuery {
+  /**
+   * Selected delivery-location id (from the `delivery_location_id` cookie —
+   * see `~/utils/delivery-location.server`). Threaded through so a real
+   * backend can filter by delivery availability/pricing for that address.
+   * The mock catalog below ignores it and always returns everything.
+   */
+  addressId?: string | null;
 }
 
 const StoreServer = {
   getStore,
-  getProducts,
+  getStoresNearYou,
+  getProductsByStoreId,
 };
 
 export default StoreServer;

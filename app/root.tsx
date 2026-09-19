@@ -6,27 +6,30 @@ import {
   ScrollRestoration,
   useRouteLoaderData,
 } from "@remix-run/react";
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 
-import DeliveryServer from "~/actions/delivery.server";
+import AddressServer from "~/actions/address.server";
 import NavigationServer from "~/actions/navigation.server";
 import Footer from "~/components/Footer";
 import Header from "~/components/Header";
 import { serverEnv } from "~/config/env.server";
 import { getPublicEnv } from "~/config/public-env";
+import { getSelectedDeliveryLocationId } from "~/utils/delivery-location.server";
 
 import "./tailwind.css";
 
-export async function loader() {
+export async function loader({ request }: LoaderFunctionArgs) {
   // Ships only the browser-safe subset of config to the client.
-  const [navigation, deliveryLocations] = await Promise.all([
+  const [navigation, deliveryLocations, selectedDeliveryLocationId] = await Promise.all([
     NavigationServer.getNavigation(),
-    DeliveryServer.listLocations(),
+    AddressServer.listAddresses("profile_seed_1"), // TODO: use real profileId from session or cookie
+    getSelectedDeliveryLocationId(request),
   ]);
   return Response.json({
     ENV: getPublicEnv(serverEnv),
     navigation,
     deliveryLocations,
+    selectedDeliveryLocationId,
   });
 }
 
@@ -79,7 +82,8 @@ export default function App() {
     <div className="flex min-h-screen flex-col">
       <Header
         navigation={data?.navigation ?? { categories: [], pages: [] }}
-        deliveryLocations={data?.deliveryLocations?.locations ?? []}
+        deliveryLocations={data?.deliveryLocations?.addresses ?? []}
+        selectedDeliveryLocationId={data?.selectedDeliveryLocationId ?? null}
       />
       <main className="flex-1">
         <Outlet />

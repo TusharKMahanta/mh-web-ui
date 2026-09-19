@@ -5,7 +5,7 @@ export default function Logo({ className }: { className?: string }) {
         <span className="sr-only">Your Company</span>
         <img
           alt=""
-          src="morhaat.png?color=indigo&shade=600"
+          src="/morhaat.png?color=indigo&shade=600"
           className="h-12 w-auto"
         />
       </a>
