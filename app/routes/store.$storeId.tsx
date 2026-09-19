@@ -11,13 +11,11 @@ export const meta: MetaFunction = () => [
 
 export async function loader({ params, request }: LoaderFunctionArgs) {
   const { storeId } = params;
-  console.log("storeId::", storeId);
   if (!storeId) {
     throw new Response("Store not found", { status: 404 });
   }
 
   const store = await StoreServer.getStore(storeId);
-  console.log("store::", store);
   if (!store) {
     throw new Response("Store not found", { status: 404 });
   }
