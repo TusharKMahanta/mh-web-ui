@@ -1,6 +1,6 @@
 import type { ActionFunctionArgs, MetaFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
-import { useActionData, useLoaderData, useNavigation } from "@remix-run/react";
+import { useActionData, useNavigation, useRouteLoaderData } from "@remix-run/react";
 
 import AddressServer, {
   validateAddressInput,
@@ -9,16 +9,12 @@ import AddressServer, {
 } from "~/actions/address.server";
 import AddressCard from "~/components/AddressCard";
 import AddressForm from "~/components/AddressForm";
+import type { loader as rootLoader } from "~/root";
 
 export const meta: MetaFunction = () => [
   { title: "Addresses · Morhaat" },
   { name: "description", content: "Manage your saved delivery addresses." },
 ];
-
-export async function loader() {
-  const { addresses, total } = await AddressServer.listAddresses("profile_seed_1"); // TODO: use real profileId from session or cookie
-  return Response.json({ addresses, total });
-}
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
@@ -45,10 +41,8 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export default function AddressPage() {
-  const { addresses } = useLoaderData<typeof loader>() as {
-    addresses: Address[];
-    total: number;
-  };
+  const rootData = useRouteLoaderData<typeof rootLoader>("root");
+  const addresses: Address[] = rootData?.deliveryLocations?.addresses ?? [];
   const actionData = useActionData<typeof action>();
   const navigation = useNavigation();
 

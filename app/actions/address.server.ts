@@ -54,10 +54,6 @@ const REQUIRED_FIELDS: ReadonlyArray<keyof CreateAddressInput> = [
   "country",
 ];
 
-// In-memory store standing in for a `addresses` database table. Seeded with one
-// row so the list has something to render on first load.
-const addresses: Address[] = [];
-
 /**
  * Server-side validation of a create request. Returns a map of field name to
  * error message; an empty object means the input is valid.
@@ -94,6 +90,7 @@ export function validateAddressInput(
 }
 
 async function listAddresses(profileId: string): Promise<AddressListResponse> {
+  console.log("profileId", profileId);
   const url = `${serverEnv.PROFILE_API_BASE_URL}/profiles/${profileId}/delivery-addresses`;
 
   const controller = new AbortController();
@@ -104,7 +101,8 @@ async function listAddresses(profileId: string): Promise<AddressListResponse> {
       throw new Error(`GET ${url} failed: ${res.status} ${res.statusText}`);
     }
     const body = (await res.json()) as { data: Address[] };
-    addresses.length = 0; // clear the in-memory array
+    //addresses.length = 0; // clear the in-memory array
+    const addresses: Address[] = [];
     [...body.data].forEach((address) => {
       addresses.push(address);
     });
@@ -120,7 +118,7 @@ async function listAddresses(profileId: string): Promise<AddressListResponse> {
 
 async function createAddress(input: CreateAddressInput): Promise<Address> {
   const line2 = input.line2?.trim();
-  const makeDefault = Boolean(input.isDefault) || addresses.length === 0;
+  const makeDefault = Boolean(input.isDefault);
 
   const address: Address = {
     id: `adr_${crypto.randomUUID()}`,
@@ -135,12 +133,7 @@ async function createAddress(input: CreateAddressInput): Promise<Address> {
     isDefault: makeDefault,
     createdAt: new Date().toISOString(),
   };
-
-  if (makeDefault) {
-    for (const existing of addresses) existing.isDefault = false;
-  }
-
-  addresses.push(address);
+  //addresses.push(address); // TODO: persist to a real backend instead of in-memory array
   return address;
 }
 
