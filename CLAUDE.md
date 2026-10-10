@@ -20,6 +20,7 @@ Treat every change as production code: `npm run typecheck`, `npm run lint`, and 
 | Lint | `npm run lint` (ESLint 8, legacy `.eslintrc.cjs`) |
 | Lint autofix | `npx eslint --fix --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .` |
 | Docker | `docker build -t morhaat-web-ui:latest .` then `docker run -p 3000:3000 morhaat-web-ui:latest` |
+| Local Redis | `docker compose -f redis/docker-compose.yaml up -d` — Redis Stack on `localhost:6379`, RedisInsight UI on http://localhost:8089 |
 
 **No test framework is configured yet** — `npm test` does not exist. For a production-grade build the intended stack (per `.agent/workflows/test.md`) is **Vitest + @testing-library/react** for unit/component tests and **Playwright** for e2e. When you add it, add `test` / `test:e2e` scripts and document how to run a single test here.
 
@@ -50,6 +51,7 @@ Per-environment settings are **runtime env vars**, resolved once at server boot.
 
 - **`app/config/env.server.ts`** is the only module that reads `process.env`. It validates/coerces and exports a typed `serverEnv`. In `staging`/`production` a missing or malformed required var (`SESSION_SECRET`, and `API_BASE_URL` when `USE_MOCK_DATA=false`) throws at boot; in `development` it warns and uses a default. Route loaders/actions and `app/actions/*.server.ts` import `serverEnv` — they must not touch `process.env` directly.
 - **`app/config/public-env.ts`** defines `PublicEnv`, the browser-safe subset. `app/root.tsx`'s loader ships it and serializes it to `window.ENV`. Anything named `PUBLIC_*` ends up in page HTML — never a secret.
+- **`app/config/redis.server.ts`** is the only module that creates a Redis client. Use `getRedis()` (lazy, shared connection) and `redisKey(...)` (applies `REDIS_KEY_PREFIX`). `REDIS_URL` is required in staging/production. OTP login (`app/actions/auth.server.ts`) stores pending codes there.
 - Dev vars load automatically from `.env.development` (committed, no secrets) / `.env.local` (git-ignored) via the Remix Vite plugin. Production/Docker: real env vars only (`.env` files are not read by `remix-serve`). `.env.example` documents every var.
 
 ## Conventions & gotchas

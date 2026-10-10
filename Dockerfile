@@ -29,10 +29,11 @@ COPY --from=builder /app/public ./public
 #   docker run -p 3000:3000 \
 #     -e APP_ENV=production \
 #     -e SESSION_SECRET=$(openssl rand -hex 32) \
+#     -e REDIS_URL=rediss://:password@redis.internal:6379/0 \
 #     -e USE_MOCK_DATA=false -e API_BASE_URL=https://api.morhaat.com \
 #     morhaat-web-ui:latest
-# In staging/production the server refuses to boot without SESSION_SECRET
-# (and API_BASE_URL when USE_MOCK_DATA=false). See docs/CONFIGURATION.md.
+# In staging/production the server refuses to boot without SESSION_SECRET and
+# REDIS_URL (and API_BASE_URL when USE_MOCK_DATA=false). See docs/CONFIGURATION.md.
 ENV NODE_ENV=production
 ENV APP_ENV=production
 ENV PORT=3000

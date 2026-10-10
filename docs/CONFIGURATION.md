@@ -51,6 +51,9 @@ Full list with descriptions: [`.env.example`](../.env.example).
 | `API_TIMEOUT_MS` | int | `10000` | no |
 | `USE_MOCK_DATA` | bool | `true` in dev, `false` elsewhere | no |
 | `LOG_LEVEL` | `debug` \| `info` \| `warn` \| `error` | `debug` in dev, `info` elsewhere | no |
+| `REDIS_URL` | `redis://` / `rediss://` URL (may hold a password) | `redis://localhost:6379` | **yes** |
+| `REDIS_KEY_PREFIX` | string | `morhaat:` | no |
+| `REDIS_CONNECT_TIMEOUT_MS` | int | `5000` | no |
 | `SESSION_SECRET` | string (secret) | dev placeholder | **yes** |
 | `PUBLIC_SITE_URL` | URL | `http://localhost:5173` | no |
 | `PUBLIC_COMMERCE_ENABLED` | bool | `true` | no |
@@ -61,6 +64,22 @@ boot with an aggregated message.
 
 `PUBLIC_*` vars (and only those, via `PublicEnv`) are serialized into page HTML
 on `window.ENV`. Never put a secret behind a `PUBLIC_` name.
+
+## Redis
+
+[`app/config/redis.server.ts`](../app/config/redis.server.ts) is the only place a
+Redis client is created. Services call `getRedis()` and build keys with
+`redisKey(...)` (which applies `REDIS_KEY_PREFIX`). The client connects lazily on
+first use, so build and boot don't need Redis; only features that use it do (OTP
+login today).
+
+For local dev, start Redis Stack with:
+
+```sh
+docker compose -f redis/docker-compose.yaml up -d
+```
+
+Redis listens on `localhost:6379`, and the RedisInsight UI is at http://localhost:8089.
 
 ## Adding a new variable
 

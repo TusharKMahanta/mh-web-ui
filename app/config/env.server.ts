@@ -58,6 +58,17 @@ export interface ServerEnv {
   LOG_LEVEL: LogLevel;
 
   /**
+   * Redis connection URL (`redis://` or `rediss://` for TLS), e.g.
+   * `redis://:password@host:6379/0`. Required in staging/production.
+   * Only `app/config/redis.server.ts` creates a client from it.
+   */
+  REDIS_URL: string;
+  /** Prepended to every key so apps/environments can share one Redis. */
+  REDIS_KEY_PREFIX: string;
+  /** Give up on establishing a Redis connection after this many milliseconds. */
+  REDIS_CONNECT_TIMEOUT_MS: number;
+
+  /**
    * Secret for signing cookies/sessions. Required in staging/production.
    * Never sent to the client. Rotate per environment.
    */
@@ -183,7 +194,12 @@ function readEnv(source: NodeJS.ProcessEnv): ServerEnv {
       `PROFILE_API_BASE_URL must be an absolute http(s) URL (got "${PROFILE_API_BASE_URL}")`,
     );
   }
-  
+
+  const REDIS_URL = str("REDIS_URL", "redis://localhost:6379");
+  if (!/^rediss?:\/\//.test(REDIS_URL)) {
+    problems.push(`REDIS_URL must be a redis:// or rediss:// URL (got "${REDIS_URL}")`);
+  }
+
   const env: ServerEnv = {
     APP_ENV,
     NODE_ENV,
@@ -197,6 +213,9 @@ function readEnv(source: NodeJS.ProcessEnv): ServerEnv {
     API_TIMEOUT_MS: int("API_TIMEOUT_MS", 10_000),
     USE_MOCK_DATA,
     LOG_LEVEL: enumStr("LOG_LEVEL", LOG_LEVELS, isDevelopment ? "debug" : "info"),
+    REDIS_URL,
+    REDIS_KEY_PREFIX: optionalStr("REDIS_KEY_PREFIX", "morhaat:"),
+    REDIS_CONNECT_TIMEOUT_MS: int("REDIS_CONNECT_TIMEOUT_MS", 5_000),
     SESSION_SECRET: str("SESSION_SECRET", "dev-insecure-session-secret"),
     PUBLIC_SITE_URL: optionalStr(
       "PUBLIC_SITE_URL",
