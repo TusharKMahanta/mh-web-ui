@@ -15,9 +15,9 @@ interface RequestOtpResponse {
   devOtp?: string;
 }
 
+/** The session itself travels in an httpOnly cookie; the body carries no token. */
 interface VerifyOtpResponse {
   ok: true;
-  profileId: string;
   identifier: string;
 }
 

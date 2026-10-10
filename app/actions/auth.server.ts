@@ -8,6 +8,10 @@
  * Pending OTP requests live in Redis (not process memory) so login works across
  * multiple server instances and restarts. Each request is one key with a TTL —
  * Redis enforces expiry — plus an attempts counter key with the same TTL.
+ *
+ * Once the code checks out, the auth service (`AUTH_API_BASE_URL`) issues the
+ * access token. The token is handed to `~/utils/session.server`, which stores
+ * it in Redis behind a session id — it never goes to the browser.
  */
 import { timingSafeEqual } from "node:crypto";
 
@@ -23,8 +27,17 @@ export interface OtpRequestResult {
   devOtp?: string;
 }
 
-export interface OtpVerifyResult {
+/** Response contract of the auth service's `POST /auth/token`. */
+export interface AuthToken {
+  accessToken: string;
+  /** Scheme for the `Authorization` header, e.g. `"Bearer"`. */
+  tokenType: string;
+  /** Seconds until `accessToken` expires. */
+  expiresIn: number;
   profileId: string;
+}
+
+export interface OtpVerifyResult extends AuthToken {
   identifier: string;
 }
 
@@ -117,10 +130,31 @@ async function verifyOtp(requestId: string, otp: string): Promise<OtpVerifyResul
   await redis.del(attemptsKey(requestId));
   if (deleted === 0) throw expired();
 
-  return {
-    profileId: "profile_seed_1", // TODO: mint/resolve a real profile once a backend exists
-    identifier: pending.identifier,
-  };
+  const token = await issueToken(pending.identifier);
+  return { ...token, identifier: pending.identifier };
+}
+
+/** Exchanges a verified identifier for an access token from the auth service. */
+async function issueToken(identifier: string): Promise<AuthToken> {
+  const url = `${serverEnv.AUTH_API_BASE_URL}/auth/token`;
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), serverEnv.API_TIMEOUT_MS);
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ identifier }),
+      signal: controller.signal,
+    });
+    if (!res.ok) {
+      throw new Error(`POST ${url} failed: ${res.status} ${res.statusText}`);
+    }
+    const body = (await res.json()) as { data: AuthToken };
+    return body.data;
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 const AuthServer = {

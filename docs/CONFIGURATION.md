@@ -48,6 +48,7 @@ Full list with descriptions: [`.env.example`](../.env.example).
 | `APP_ENV` | `development` \| `staging` \| `production` | `development` | — |
 | `PORT` | int | `3000` | no |
 | `API_BASE_URL` | http(s) URL | *(empty)* | **yes if `USE_MOCK_DATA=false`** |
+| `STORE_API_BASE_URL` / `PROFILE_API_BASE_URL` / `AUTH_API_BASE_URL` | http(s) URL | *(empty)* | **yes if `USE_MOCK_DATA=false`** |
 | `API_TIMEOUT_MS` | int | `10000` | no |
 | `USE_MOCK_DATA` | bool | `true` in dev, `false` elsewhere | no |
 | `LOG_LEVEL` | `debug` \| `info` \| `warn` \| `error` | `debug` in dev, `info` elsewhere | no |
@@ -55,6 +56,7 @@ Full list with descriptions: [`.env.example`](../.env.example).
 | `REDIS_KEY_PREFIX` | string | `morhaat:` | no |
 | `REDIS_CONNECT_TIMEOUT_MS` | int | `5000` | no |
 | `SESSION_SECRET` | string (secret) | dev placeholder | **yes** |
+| `SESSION_TTL_SECONDS` | int | `604800` (7 days) | no |
 | `PUBLIC_SITE_URL` | URL | `http://localhost:5173` | no |
 | `PUBLIC_COMMERCE_ENABLED` | bool | `true` | no |
 

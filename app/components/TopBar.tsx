@@ -6,17 +6,21 @@ import Logo from '~/components/Logo'
 import type { Address} from '~/actions/address.server'
 import DeliveryModal from "~/components/DeliveryModal";
 import LoginModal from "~/components/LoginModal";
+import type { SessionUser } from "~/utils/session.server";
 
 interface TopBarProps {
   deliveryLocations?: Address[];
   /** Id persisted in the `delivery_location_id` cookie, if the shopper has picked one. */
   selectedDeliveryLocationId?: string | null;
+  /** Signed-in user, or null for guests. */
+  user?: SessionUser | null;
   onSearch?: (query: string) => void;
 }
 
 export default function TopBar({
   deliveryLocations = [],
   selectedDeliveryLocationId = null,
+  user = null,
   onSearch,
 }: TopBarProps) {
   const [loginOpen, setLoginOpen] = useState(false);
@@ -72,13 +76,19 @@ export default function TopBar({
             </span>
           </button>
           <span aria-hidden="true" className="h-8 w-px bg-gray-600" />
-          <Button
-            type="button"
-            onClick={() => setLoginOpen(true)}
-            className="text-sm font-medium text-gray-700 hover:text-gray-800 bg-orange-300 hover:bg-gray-200 px-3 py-2 rounded-md"
-          >
-            Login/ Signup
-          </Button>
+          {user ? (
+            <span className="max-w-[12rem] truncate text-sm font-medium text-gray-800">
+              {user.identifier}
+            </span>
+          ) : (
+            <Button
+              type="button"
+              onClick={() => setLoginOpen(true)}
+              className="text-sm font-medium text-gray-700 hover:text-gray-800 bg-orange-300 hover:bg-gray-200 px-3 py-2 rounded-md"
+            >
+              Login/ Signup
+            </Button>
+          )}
         </div>
       </div>
 

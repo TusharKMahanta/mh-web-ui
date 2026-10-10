@@ -2,6 +2,7 @@ import type { ActionFunctionArgs } from "@remix-run/node";
 
 import AddressServer from "~/actions/address.server";
 import { serializeDeliveryLocationId } from "~/utils/delivery-location.server";
+import { getUserSession } from "~/utils/session.server";
 
 /**
  * Resource route: persists the shopper's chosen delivery location as a
@@ -18,7 +19,15 @@ export async function action({ request }: ActionFunctionArgs) {
     return Response.json({ error: "locationId is required" }, { status: 400 });
   }
 
-  const { addresses } = await AddressServer.listAddresses("profile_seed_1"); // TODO: use real profileId from session or cookie
+  const session = await getUserSession(request);
+  if (!session) {
+    return Response.json({ error: "Sign in to choose a saved address" }, { status: 401 });
+  }
+
+  const { addresses } = await AddressServer.listAddresses(
+    session.profileId,
+    session.accessToken,
+  );
   const isKnownLocation = addresses.some((address) => address.id === locationId);
   if (!isKnownLocation) {
     return Response.json({ error: "Unknown location" }, { status: 400 });

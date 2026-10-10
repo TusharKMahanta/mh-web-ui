@@ -49,6 +49,8 @@ export interface ServerEnv {
   STORE_API_BASE_URL: string;
   /** Base URL of the profile service. Empty while the app runs on mock data. */
   PROFILE_API_BASE_URL: string;
+  /** Base URL of the auth service that issues access tokens after OTP login. */
+  AUTH_API_BASE_URL: string;
   /** Abort an API request after this many milliseconds. */
   API_TIMEOUT_MS: number;
   /** When true, service modules serve in-memory mock data and ignore API_BASE_URL. */
@@ -73,6 +75,11 @@ export interface ServerEnv {
    * Never sent to the client. Rotate per environment.
    */
   SESSION_SECRET: string;
+  /**
+   * Lifetime of a login session in seconds: the session cookie's maxAge and the
+   * upper bound on its Redis TTL (a session never outlives its access token).
+   */
+  SESSION_TTL_SECONDS: number;
 
   /** Canonical public origin, e.g. https://morhaat.com — used for absolute URLs. */
   PUBLIC_SITE_URL: string;
@@ -195,7 +202,16 @@ function readEnv(source: NodeJS.ProcessEnv): ServerEnv {
     );
   }
 
-  const REDIS_URL = str("REDIS_URL", "redis://localhost:6379");
+  const AUTH_API_BASE_URL = USE_MOCK_DATA
+    ? optionalStr("AUTH_API_BASE_URL", "")
+    : str("AUTH_API_BASE_URL", "");
+  if (AUTH_API_BASE_URL && !/^https?:\/\//.test(AUTH_API_BASE_URL)) {
+    problems.push(
+      `AUTH_API_BASE_URL must be an absolute http(s) URL (got "${AUTH_API_BASE_URL}")`,
+    );
+  }
+
+  const REDIS_URL =str("REDIS_URL", "redis://localhost:6379");
   if (!/^rediss?:\/\//.test(REDIS_URL)) {
     problems.push(`REDIS_URL must be a redis:// or rediss:// URL (got "${REDIS_URL}")`);
   }
@@ -210,6 +226,7 @@ function readEnv(source: NodeJS.ProcessEnv): ServerEnv {
     API_BASE_URL,
     STORE_API_BASE_URL,
     PROFILE_API_BASE_URL,
+    AUTH_API_BASE_URL,
     API_TIMEOUT_MS: int("API_TIMEOUT_MS", 10_000),
     USE_MOCK_DATA,
     LOG_LEVEL: enumStr("LOG_LEVEL", LOG_LEVELS, isDevelopment ? "debug" : "info"),
@@ -217,6 +234,7 @@ function readEnv(source: NodeJS.ProcessEnv): ServerEnv {
     REDIS_KEY_PREFIX: optionalStr("REDIS_KEY_PREFIX", "morhaat:"),
     REDIS_CONNECT_TIMEOUT_MS: int("REDIS_CONNECT_TIMEOUT_MS", 5_000),
     SESSION_SECRET: str("SESSION_SECRET", "dev-insecure-session-secret"),
+    SESSION_TTL_SECONDS: int("SESSION_TTL_SECONDS", 7 * 24 * 60 * 60),
     PUBLIC_SITE_URL: optionalStr(
       "PUBLIC_SITE_URL",
       `http://localhost:${source.PORT?.trim() || "5173"}`,

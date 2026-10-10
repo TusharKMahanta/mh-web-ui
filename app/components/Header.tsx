@@ -9,15 +9,19 @@ import MegaMenu from '~/components/MegaMenu'
 import MobileMenu from '~/components/MobileMenu'
 import SearchLink from '~/components/SearchLink'
 import TopBar from '~/components/TopBar'
+import type { SessionUser } from '~/utils/session.server'
 
 export default function Header({
   navigation,
   deliveryLocations,
   selectedDeliveryLocationId,
+  user,
 }: {
   navigation: NavigationResponse
   deliveryLocations: Address[]
   selectedDeliveryLocationId: string | null
+  /** Signed-in user, or null for guests. */
+  user: SessionUser | null
 }) {
   const [open, setOpen] = useState(false)
 
@@ -30,6 +34,7 @@ export default function Header({
           <TopBar
             deliveryLocations={deliveryLocations}
             selectedDeliveryLocationId={selectedDeliveryLocationId}
+            user={user}
           />
 
           {/* Secondary navigation */}
@@ -76,7 +81,7 @@ export default function Header({
                   <div className="flex flex-1 items-center justify-end">
                     <div className="flex items-center lg:ml-8">
                       <div className="flex space-x-8">
-                        <AccountPopover />
+                        <AccountPopover user={user} />
                       </div>
 
                       <span aria-hidden="true" className="mx-4 h-6 w-px bg-gray-200 lg:mx-6" />

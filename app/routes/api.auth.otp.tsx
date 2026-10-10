@@ -1,6 +1,7 @@
 import type { ActionFunctionArgs } from "@remix-run/node";
 
 import AuthServer, { InvalidOtpError } from "~/actions/auth.server";
+import { createUserSession } from "~/utils/session.server";
 
 /**
  * Resource route backing the OTP login flow in `LoginModal`: two actions
@@ -31,7 +32,12 @@ export async function action({ request }: ActionFunctionArgs) {
     }
     try {
       const result = await AuthServer.verifyOtp(requestId, otp);
-      return Response.json({ ok: true as const, ...result });
+      // Only the session id (in an httpOnly cookie) reaches the browser; the
+      // access token stays in Redis.
+      return Response.json(
+        { ok: true as const, identifier: result.identifier },
+        { headers: { "Set-Cookie": await createUserSession(request, result) } },
+      );
     } catch (error) {
       if (error instanceof InvalidOtpError) {
         return Response.json({ error: error.message }, { status: 400 });

@@ -89,14 +89,19 @@ export function validateAddressInput(
   return errors;
 }
 
-async function listAddresses(profileId: string): Promise<AddressListResponse> {
-  console.log("profileId", profileId);
+async function listAddresses(
+  profileId: string,
+  accessToken: string,
+): Promise<AddressListResponse> {
   const url = `${serverEnv.PROFILE_API_BASE_URL}/profiles/${profileId}/delivery-addresses`;
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), serverEnv.API_TIMEOUT_MS);
   try {
-    const res = await fetch(url, { signal: controller.signal });
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+      signal: controller.signal,
+    });
     if (!res.ok) {
       throw new Error(`GET ${url} failed: ${res.status} ${res.statusText}`);
     }

@@ -1,7 +1,12 @@
 {
   "request": {
     "method": "GET",
-    "urlPathPattern": "/mh-profile-app/profiles/([A-Za-z0-9_-]+)/delivery-addresses"
+    "urlPathPattern": "/mh-profile-app/profiles/([A-Za-z0-9_-]+)/delivery-addresses",
+    "headers": {
+      "Authorization": {
+        "matches": "Bearer .+"
+      }
+    }
   },
   "response": {
     "status": 200,

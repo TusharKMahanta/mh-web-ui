@@ -15,21 +15,28 @@ import Header from "~/components/Header";
 import { serverEnv } from "~/config/env.server";
 import { getPublicEnv } from "~/config/public-env";
 import { getSelectedDeliveryLocationId } from "~/utils/delivery-location.server";
+import { getUserSession, type SessionUser } from "~/utils/session.server";
 
 import "./tailwind.css";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  // Ships only the browser-safe subset of config to the client.
+  const session = await getUserSession(request);
   const [navigation, deliveryLocations, selectedDeliveryLocationId] = await Promise.all([
     NavigationServer.getNavigation(),
-    AddressServer.listAddresses("profile_seed_1"), // TODO: use real profileId from session or cookie
+    session
+      ? AddressServer.listAddresses(session.profileId, session.accessToken)
+      : { addresses: [], total: 0 },
     getSelectedDeliveryLocationId(request),
   ]);
+  // Only the browser-safe projection of the session — never the access token.
+  const user: SessionUser | null = session ? { identifier: session.identifier } : null;
   return Response.json({
+    // Ships only the browser-safe subset of config to the client.
     ENV: getPublicEnv(serverEnv),
     navigation,
     deliveryLocations,
     selectedDeliveryLocationId,
+    user,
   });
 }
 
@@ -84,6 +91,7 @@ export default function App() {
         navigation={data?.navigation ?? { categories: [], pages: [] }}
         deliveryLocations={data?.deliveryLocations?.addresses ?? []}
         selectedDeliveryLocationId={data?.selectedDeliveryLocationId ?? null}
+        user={data?.user ?? null}
       />
       <main className="flex-1">
         <Outlet />
