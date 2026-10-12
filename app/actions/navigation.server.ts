@@ -29,32 +29,32 @@ const categories: NavigationCategory[] = [
   {
     name: "Groceries & Essentials",
     featured: [
-      { name: "Atta, Rice & Daal", href: "#" },
-      { name: "Organic Healthy Living", href: "#" },
-      { name: "Masala Oil & More", href: "#" },
+      { name: "Atta, Rice & Daal", href: "/search?q=Atta+Rice+&+Daal" },
+      { name: "Organic Healthy Living", href: "/search?q=Organic+Healthy+Living" },
+      { name: "Masala Oil & More", href: "/search?q=Masala+Oil+&+More" },
     ],
     collection: [
-      { name: "Dairy, Bread & Eggs", href: "#" },
-      { name: "Snacks & Munchies", href: "#" },
-      { name: "Breakfast & Instant Food", href: "#" },
+      { name: "Dairy, Bread & Eggs", href: "/search?q=Dairy%2C+Bread+%26+Eggs" },
+      { name: "Snacks & Munchies", href: "/search?q=Snacks+&+Munchies" },
+      { name: "Breakfast & Instant Food", href: "/search?q=Breakfast+&+Instant+Food" },
     ],
     categories: [
-      { name: "Cleaning Essentials", href: "#" },
-      { name: "Home & Offices", href: "#" },
-      { name: "Personal Care", href: "#" },
+      { name: "Cleaning Essentials", href: "/search?q=Cleaning+Essentials" },
+      { name: "Home & Offices", href: "/search?q=Home+&+Offices" },
+      { name: "Personal Care", href: "/search?q=Personal+Care" },
     ],
     brands: [
-      { name: "Bekery & Buscuits ", href: "#" },
-      { name: "Cold Drinks & Juices", href: "#" },
-      { name: "Beauties & Personal Care", href: "#" },
+      { name: "Bekery & Buscuits ", href: "/search?q=Bekery+&+Buscuits" },
+      { name: "Cold Drinks & Juices", href: "/search?q=Cold+Drinks+&+Juices" },
+      { name: "Beauties & Personal Care", href: "/search?q=Beauties+&+Personal+Care" },
     ],
   }
 ];
 
 const pages: NavLink[] = [
-  { name: "Fresh Vegetables", href: "/fresh-vegetables" },
-  { name: "Exotic Fruits/Vegetables", href: "/exotic-fruits-vegetables" },
-  { name: "Food & Health", href: "/food" },
+  { name: "Fresh Vegetables", href: "/search?q=Fresh+Vegetables" },
+  { name: "Exotic Fruits/Vegetables", href: "/search?q=Exotic+Fruits/Vegetables" },
+  { name: "Food & Health", href: "/search?q=Food+&+Health" },
 ];
 
 async function getNavigation(): Promise<NavigationResponse> {
