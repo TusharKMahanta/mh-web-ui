@@ -30,6 +30,9 @@ Each route owns its own page layout and state. State lives in the route, not in 
 | [`app/routes/_index.tsx`](../app/routes/_index.tsx) | `/` | `loader` → `HomeServer.getCatagories()` | "Collections" grid. Server-loaded list of category cards rendered via `useLoaderData`. Sets page `<title>`/description via `meta`. **Gaps:** `catagory: any` in the `.map`, category links are `href="#"`, loader return isn't typed against a service type, term is misspelled `catagory`. |
 | [`app/routes/cart.tsx`](../app/routes/cart.tsx) | `/cart` | Inline `INITIAL_CART_ITEMS` array + `useState` | Shopping cart page. Holds cart items in client state, computes `subtotal` / `shipping` ($5 flat) / `tax` (8%) / `total` in the component, renders `<CartItem>` list + `<OrderSummary>`, and shows an empty-cart state. **Gaps (per `CLAUDE.md`):** mock data is inline instead of in a `cart.server.ts` service; totals/tax/shipping are hardcoded business logic in the view; unescaped `'` and redundant `role="list"` trip lint; `Checkout` button is inert. |
 | [`app/routes/history.tsx`](../app/routes/history.tsx) | `/history` | none | Static "Your History Book" placeholder with a "Continue Shopping" link. No loader, no data model yet. |
+| [`app/routes/search.tsx`](../app/routes/search.tsx) | `/search?q=&page=` | `loader` → `SkuServer.searchSkus()` | Full search results for `q` (24 per page, Prev/Next links) rendered with `<ProductGrid>`. Empty `q` makes no API call. Also renders a `SearchCombobox` for mobile, where the header search is hidden. |
+| [`app/routes/sku.$skuId.tsx`](../app/routes/sku.$skuId.tsx) | `/sku/:skuId` | `loader` → `SkuServer.getSku()` | SKU detail page. Unknown id → 404 handled by the route `ErrorBoundary` ("Product not found"). "Add to bag" is inert until the cart service exists. |
+| [`app/routes/api.search.suggest.tsx`](../app/routes/api.search.suggest.tsx) | `/api/search/suggest?q=` | `loader` → `SkuServer.searchSkus({ limit: 8 })` | Resource route for typeahead. Returns `SuggestResponse` (`~/utils/search`); fewer than 2 chars → empty list. |
 
 ---
 
@@ -41,6 +44,8 @@ Prop-driven, no data fetching, no router awareness. These are the reusable UI pi
 | --- | --- | --- |
 | [`app/components/CartItem.tsx`](../app/components/CartItem.tsx) | `id, title, price, image, quantity, onUpdateQuantity(id, qty), onRemove(id)` | One row in the cart: thumbnail, title, line total (`price * quantity`), per-unit price, a −/＋ quantity stepper (− disabled at qty 1), and a Remove button. Purely controlled — all mutations bubble up through callbacks. Imports `useState` but does not use it. Product title links to `href="#"`. |
 | [`app/components/OrderSummary.tsx`](../app/components/OrderSummary.tsx) | `subtotal, shipping, tax, total` (all `number`) | The order-summary panel on the cart page: formatted money rows and a full-width Checkout button. Display-only — receives already-computed totals, does no math. Checkout button has no handler. |
+| [`app/components/SearchCombobox.tsx`](../app/components/SearchCombobox.tsx) | `className?` | Header search box (WAI-ARIA combobox). Debounced `useFetcher` load of `/api/search/suggest`. Click or ↑/↓ + Enter on a suggestion → `/sku/:id`; Enter with nothing highlighted → native GET submit to `/search?q=`; Esc closes. Pre-fills from `?q=` on `/search`. |
+| [`app/components/ProductGrid.tsx`](../app/components/ProductGrid.tsx) | `items: ProductGridItem[]` | Product card grid shared by the store and search pages. Callers map their own model to `{ id, name, subtitle, href, imageSrc, imageAlt, priceLabel }`. |
 
 ---
 
@@ -52,6 +57,8 @@ only callers; a real backend later means rewriting only the bodies of these func
 | Module | Exports | Shape |
 | --- | --- | --- |
 | [`app/actions/home.server.ts`](../app/actions/home.server.ts) | `default HomeServer = { getCatagories }` | `async getCatagories()` returns a static array of category objects `{ name, description, imageSrc, imageAlt, href }`. **Gaps:** opens with a `"use server"` directive and imports the `_index` route module — both wrong for Remix (build logs "`use server` ... was ignored"); objects have no stable `id`; not a list-response shape (can't grow pagination/filtering); no exported types; misspelled `catagories`. |
+
+| [`app/actions/sku.server.ts`](../app/actions/sku.server.ts) | `default SkuServer = { searchSkus, getSku }`, types `Sku`, `Money`, `SkuListResponse` | `GET ${STORE_API_BASE_URL}/skus?q=&limit=&offset=` → `{ data, total, limit, offset }`; `GET /skus/:id` → `{ data: Sku }` (404 → `null`). Money is minor units + ISO-4217 currency; format with `~/utils/money`. WireMock stubs in `wiremock/mappings/sku/` (`q` containing `zzz` → empty; `sku_missing` → 404). |
 
 **Not yet built:** `cart.server.ts` (cart items + pricing), a history/orders service, a
 products/catalog service. Per `CLAUDE.md`, cart data + logic should move here when

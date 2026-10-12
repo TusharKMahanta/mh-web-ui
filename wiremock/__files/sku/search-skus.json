@@ -1,0 +1,187 @@
+{
+  "data": [
+    {
+      "id": "sku_1",
+      "slug": "zip-tote-basket",
+      "name": "Zip Tote Basket",
+      "description": "Zip Tote Basket in white and black — durable canvas with reinforced handles.",
+      "storeId": "str_1",
+      "color": "White and black",
+      "price": {
+        "amount": 10000,
+        "currency": "INR"
+      },
+      "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-01.jpg",
+      "imageAlt": "Front of zip tote basket in white and black.",
+      "inStock": true
+    },
+    {
+      "id": "sku_2",
+      "slug": "zip-high-wall-tote",
+      "name": "Zip High Wall Tote",
+      "description": "Zip High Wall Tote in white and blue — durable canvas with reinforced handles.",
+      "storeId": "str_2",
+      "color": "White and blue",
+      "price": {
+        "amount": 11000,
+        "currency": "INR"
+      },
+      "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-02.jpg",
+      "imageAlt": "Front of zip high wall tote in white and blue.",
+      "inStock": true
+    },
+    {
+      "id": "sku_3",
+      "slug": "halfsize-tote",
+      "name": "Halfsize Tote",
+      "description": "Halfsize Tote in clay — durable canvas with reinforced handles.",
+      "storeId": "str_3",
+      "color": "Clay",
+      "price": {
+        "amount": 12000,
+        "currency": "INR"
+      },
+      "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-03.jpg",
+      "imageAlt": "Front of halfsize tote in clay.",
+      "inStock": true
+    },
+    {
+      "id": "sku_4",
+      "slug": "high-wall-tote",
+      "name": "High Wall Tote",
+      "description": "High Wall Tote in black and orange — durable canvas with reinforced handles.",
+      "storeId": "str_1",
+      "color": "Black and orange",
+      "price": {
+        "amount": 13000,
+        "currency": "INR"
+      },
+      "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-04.jpg",
+      "imageAlt": "Front of high wall tote in black and orange.",
+      "inStock": true
+    },
+    {
+      "id": "sku_5",
+      "slug": "canvas-market-tote",
+      "name": "Canvas Market Tote",
+      "description": "Canvas Market Tote in natural — durable canvas with reinforced handles.",
+      "storeId": "str_2",
+      "color": "Natural",
+      "price": {
+        "amount": 14000,
+        "currency": "INR"
+      },
+      "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-01.jpg",
+      "imageAlt": "Front of canvas market tote in natural.",
+      "inStock": false
+    },
+    {
+      "id": "sku_6",
+      "slug": "leather-zip-pouch",
+      "name": "Leather Zip Pouch",
+      "description": "Leather Zip Pouch in tan — durable canvas with reinforced handles.",
+      "storeId": "str_3",
+      "color": "Tan",
+      "price": {
+        "amount": 15000,
+        "currency": "INR"
+      },
+      "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-02.jpg",
+      "imageAlt": "Front of leather zip pouch in tan.",
+      "inStock": true
+    },
+    {
+      "id": "sku_7",
+      "slug": "weekend-duffel",
+      "name": "Weekend Duffel",
+      "description": "Weekend Duffel in olive — durable canvas with reinforced handles.",
+      "storeId": "str_1",
+      "color": "Olive",
+      "price": {
+        "amount": 16000,
+        "currency": "INR"
+      },
+      "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-03.jpg",
+      "imageAlt": "Front of weekend duffel in olive.",
+      "inStock": true
+    },
+    {
+      "id": "sku_8",
+      "slug": "roll-top-backpack",
+      "name": "Roll-Top Backpack",
+      "description": "Roll-Top Backpack in charcoal — durable canvas with reinforced handles.",
+      "storeId": "str_2",
+      "color": "Charcoal",
+      "price": {
+        "amount": 17000,
+        "currency": "INR"
+      },
+      "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-04.jpg",
+      "imageAlt": "Front of roll-top backpack in charcoal.",
+      "inStock": true
+    },
+    {
+      "id": "sku_9",
+      "slug": "mini-crossbody",
+      "name": "Mini Crossbody",
+      "description": "Mini Crossbody in rose — durable canvas with reinforced handles.",
+      "storeId": "str_3",
+      "color": "Rose",
+      "price": {
+        "amount": 18000,
+        "currency": "INR"
+      },
+      "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-01.jpg",
+      "imageAlt": "Front of mini crossbody in rose.",
+      "inStock": true
+    },
+    {
+      "id": "sku_10",
+      "slug": "laptop-sleeve",
+      "name": "Laptop Sleeve",
+      "description": "Laptop Sleeve in grey — durable canvas with reinforced handles.",
+      "storeId": "str_1",
+      "color": "Grey",
+      "price": {
+        "amount": 19000,
+        "currency": "INR"
+      },
+      "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-02.jpg",
+      "imageAlt": "Front of laptop sleeve in grey.",
+      "inStock": false
+    },
+    {
+      "id": "sku_11",
+      "slug": "drawstring-bag",
+      "name": "Drawstring Bag",
+      "description": "Drawstring Bag in navy — durable canvas with reinforced handles.",
+      "storeId": "str_2",
+      "color": "Navy",
+      "price": {
+        "amount": 20000,
+        "currency": "INR"
+      },
+      "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-03.jpg",
+      "imageAlt": "Front of drawstring bag in navy.",
+      "inStock": true
+    },
+    {
+      "id": "sku_12",
+      "slug": "travel-organizer",
+      "name": "Travel Organizer",
+      "description": "Travel Organizer in sand — durable canvas with reinforced handles.",
+      "storeId": "str_3",
+      "color": "Sand",
+      "price": {
+        "amount": 21000,
+        "currency": "INR"
+      },
+      "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-04.jpg",
+      "imageAlt": "Front of travel organizer in sand.",
+      "inStock": true
+    }
+  ],
+  "total": 12,
+  "limit": 24,
+  "offset": 0
+}

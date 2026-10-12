@@ -1,0 +1,17 @@
+{
+  "data": {
+    "id": "{{request.pathSegments.[2]}}",
+    "slug": "zip-tote-basket",
+    "name": "Zip Tote Basket",
+    "description": "Zip tote basket in white and black \u2014 durable canvas with reinforced handles and a full-length zipper.",
+    "storeId": "str_1",
+    "color": "White and black",
+    "price": {
+      "amount": 14000,
+      "currency": "INR"
+    },
+    "imageSrc": "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-03-related-product-01.jpg",
+    "imageAlt": "Front of zip tote bag with white canvas, black canvas straps and handle, and black zipper pulls.",
+    "inStock": true
+  }
+}

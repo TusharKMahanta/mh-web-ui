@@ -1,0 +1,42 @@
+{
+  "mappings": [
+    {
+      "priority": 1,
+      "request": {
+        "method": "GET",
+        "urlPath": "/mh-store-app/skus",
+        "queryParameters": {
+          "q": {
+            "matches": "(?i).*zzz.*"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "data": [],
+          "total": 0,
+          "limit": 24,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "GET",
+        "urlPath": "/mh-store-app/skus"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "bodyFileName": "sku/search-skus.json"
+      }
+    }
+  ]
+}
