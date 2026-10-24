@@ -1,5 +1,7 @@
 import { Link } from '@remix-run/react'
 
+import AddToCartButton from '~/components/AddToCartButton'
+
 export interface ProductGridItem {
   id: string | number
   name: string
@@ -8,7 +10,14 @@ export interface ProductGridItem {
   imageSrc: string
   imageAlt: string
   priceLabel: string
+  /** When set, "Add to bag" adds this SKU to the cart; otherwise it links to `href`. */
+  skuId?: string
+  inStock?: boolean
 }
+
+const addToBagClassName =
+  'relative flex w-full items-center justify-center rounded-md border border-transparent bg-gray-100 px-8 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-60'
+
 
 export default function ProductGrid({ items }: { items: ProductGridItem[] }) {
   return (
@@ -36,12 +45,20 @@ export default function ProductGrid({ items }: { items: ProductGridItem[] }) {
             </div>
           </div>
           <div className="mt-6">
-            <Link
-              to={product.href}
-              className="relative flex items-center justify-center rounded-md border border-transparent bg-gray-100 px-8 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200"
-            >
-              Add to bag<span className="sr-only">, {product.name}</span>
-            </Link>
+            {product.skuId ? (
+              <AddToCartButton
+                skuId={product.skuId}
+                productName={product.name}
+                disabled={product.inStock === false}
+                className={addToBagClassName}
+              >
+                {product.inStock === false ? 'Out of stock' : 'Add to bag'}
+              </AddToCartButton>
+            ) : (
+              <Link to={product.href} className={addToBagClassName}>
+                Add to bag<span className="sr-only">, {product.name}</span>
+              </Link>
+            )}
           </div>
         </div>
       ))}

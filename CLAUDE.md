@@ -42,7 +42,8 @@ All data MUST flow through **service modules in `app/actions/*.server.ts`** (e.g
 
 - Route `loader`/`action` functions call these service modules and nothing else for data. Loaders return `Response.json(...)`.
 - Service functions are **`async` and return typed, API-shaped data** — model the shape as if it came from a real REST/GraphQL backend (stable IDs, list responses that can grow pagination/filtering, ISO date strings, money as minor units or a documented convention). Export the types; they are the contract the rest of the app codes against.
-- **Do not put mock data arrays inline in route or component files.** `app/routes/cart.tsx` currently violates this (`INITIAL_CART_ITEMS` inline, totals hardcoded) — migrate cart data/logic into a `cart.server.ts` service + typed model when touching it.
+- **Do not put mock data arrays inline in route or component files.**
+- **Cart**: there is no backend cart API yet, so `cart.server.ts` persists carts in Redis (hash `cart:<id>`, one field per SKU, 30-day sliding TTL). The cart id lives in a signed httpOnly `cart_id` cookie (`app/utils/cart-session.server.ts`), independent of login, so guests have carts too. All mutations post to the `app/routes/api.cart.tsx` resource route (`intent` = `add` | `update` | `remove`) via `useFetcher`. Remix revalidation then refreshes the header badge (root loader `cartItemCount`) and the cart page. Prices come from `SkuServer.getSku`, never the client. Totals (mock flat shipping + 8% tax) are computed in the service.
 - Keep the mock/real switch at the module boundary: a real backend later means rewriting the body of these functions only.
 
 ### Environment configuration (the deploy seam — read before reading `process.env`)

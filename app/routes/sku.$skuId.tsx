@@ -2,6 +2,7 @@ import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { Link, isRouteErrorResponse, useLoaderData, useRouteError } from "@remix-run/react";
 
 import SkuServer, { type Sku } from "~/actions/sku.server";
+import AddToCartButton from "~/components/AddToCartButton";
 import { formatMoney } from "~/utils/money";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => [
@@ -47,13 +48,14 @@ export default function SkuPage() {
 
               <p className="mt-6 text-base text-gray-700">{sku.description}</p>
 
-              <button
-                type="button"
-                disabled={!sku.inStock}
-                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-orange-400 px-8 py-3 text-base font-medium text-white hover:bg-orange-500 disabled:cursor-not-allowed disabled:bg-gray-300"
-              >
-                Add to bag
-              </button>
+              <div className="mt-10">
+                <AddToCartButton
+                  skuId={sku.id}
+                  productName={sku.name}
+                  disabled={!sku.inStock}
+                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-orange-400 px-8 py-3 text-base font-medium text-white hover:bg-orange-500 disabled:cursor-not-allowed disabled:bg-gray-300"
+                />
+              </div>
             </div>
           </div>
         </div>

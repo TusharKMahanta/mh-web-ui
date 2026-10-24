@@ -71,6 +71,8 @@ export default function SearchPage() {
                   imageSrc: sku.imageSrc,
                   imageAlt: sku.imageAlt,
                   priceLabel: formatMoney(sku.price),
+                  skuId: sku.id,
+                  inStock: sku.inStock,
                 }))}
               />
             )}

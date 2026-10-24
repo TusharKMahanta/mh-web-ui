@@ -1,8 +1,11 @@
+import type { Money } from "~/actions/sku.server";
+import { formatMoney } from "~/utils/money";
+
 interface OrderSummaryProps {
-    subtotal: number;
-    shipping: number;
-    tax: number;
-    total: number;
+    subtotal: Money;
+    shipping: Money;
+    tax: Money;
+    total: Money;
 }
 
 export default function OrderSummary({
@@ -18,21 +21,21 @@ export default function OrderSummary({
             <div className="mt-6 space-y-4">
                 <div className="flex items-center justify-between">
                     <p className="text-sm text-gray-600">Subtotal</p>
-                    <p className="text-sm font-medium text-gray-900">${subtotal.toFixed(2)}</p>
+                    <p className="text-sm font-medium text-gray-900">{formatMoney(subtotal)}</p>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                     <p className="flex items-center text-sm text-gray-600">
                         <span>Shipping estimate</span>
                     </p>
-                    <p className="text-sm font-medium text-gray-900">${shipping.toFixed(2)}</p>
+                    <p className="text-sm font-medium text-gray-900">{formatMoney(shipping)}</p>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                     <p className="text-sm text-gray-600">Tax estimate</p>
-                    <p className="text-sm font-medium text-gray-900">${tax.toFixed(2)}</p>
+                    <p className="text-sm font-medium text-gray-900">{formatMoney(tax)}</p>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                     <p className="text-base font-medium text-gray-900">Order total</p>
-                    <p className="text-base font-medium text-gray-900">${total.toFixed(2)}</p>
+                    <p className="text-base font-medium text-gray-900">{formatMoney(total)}</p>
                 </div>
             </div>
 

@@ -9,11 +9,13 @@ import {
 import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 
 import AddressServer from "~/actions/address.server";
+import CartServer from "~/actions/cart.server";
 import NavigationServer from "~/actions/navigation.server";
 import Footer from "~/components/Footer";
 import Header from "~/components/Header";
 import { serverEnv } from "~/config/env.server";
 import { getPublicEnv } from "~/config/public-env";
+import { getCartId } from "~/utils/cart-session.server";
 import { getSelectedDeliveryLocationId } from "~/utils/delivery-location.server";
 import { getUserSession, type SessionUser } from "~/utils/session.server";
 
@@ -21,12 +23,13 @@ import "./tailwind.css";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const session = await getUserSession(request);
-  const [navigation, deliveryLocations, selectedDeliveryLocationId] = await Promise.all([
+  const [navigation, deliveryLocations, selectedDeliveryLocationId, cart] = await Promise.all([
     NavigationServer.getNavigation(),
     session
       ? AddressServer.listAddresses(session.profileId, session.accessToken)
       : { addresses: [], total: 0 },
     getSelectedDeliveryLocationId(request),
+    getCartId(request).then(CartServer.getCart),
   ]);
   // Only the browser-safe projection of the session — never the access token.
   const user: SessionUser | null = session ? { identifier: session.identifier } : null;
@@ -37,6 +40,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
     deliveryLocations,
     selectedDeliveryLocationId,
     user,
+    // Only the badge count — the full cart is loaded by the cart page itself.
+    cartItemCount: cart.itemCount,
   });
 }
 
@@ -92,6 +97,7 @@ export default function App() {
         deliveryLocations={data?.deliveryLocations?.addresses ?? []}
         selectedDeliveryLocationId={data?.selectedDeliveryLocationId ?? null}
         user={data?.user ?? null}
+        cartItemCount={data?.cartItemCount ?? 0}
       />
       <main className="flex-1">
         <Outlet />

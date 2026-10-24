@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { PopoverGroup } from '@headlessui/react'
+import { Link } from '@remix-run/react'
 import { Bars3Icon, ShoppingCartIcon } from '@heroicons/react/24/outline'
 
 import type { Address} from '~/actions/address.server'
@@ -16,12 +17,15 @@ export default function Header({
   deliveryLocations,
   selectedDeliveryLocationId,
   user,
+  cartItemCount,
 }: {
   navigation: NavigationResponse
   deliveryLocations: Address[]
   selectedDeliveryLocationId: string | null
   /** Signed-in user, or null for guests. */
   user: SessionUser | null
+  /** Total quantity across all cart lines. */
+  cartItemCount: number
 }) {
   const [open, setOpen] = useState(false)
 
@@ -87,14 +91,16 @@ export default function Header({
                       <span aria-hidden="true" className="mx-4 h-6 w-px bg-gray-200 lg:mx-6" />
 
                       <div className="flow-root">
-                        <a href="/cart" className="group -m-2 flex items-center p-2">
+                        <Link to="/cart" className="group -m-2 flex items-center p-2">
                           <ShoppingCartIcon
                             aria-hidden="true"
                             className="size-6 shrink-0 text-gray-400 group-hover:text-gray-500"
                           />
-                          <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                          <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
+                            {cartItemCount}
+                          </span>
                           <span className="sr-only">items in cart, view bag</span>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
